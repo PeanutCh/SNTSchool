@@ -6,18 +6,38 @@
   <title>Home - SNT School</title>
   <link rel="icon" type="image/x-icon" href="Logo.png">
   <link rel="stylesheet" href="homedesign.css" />
+  <script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+
+  function showNextSlide() {
+    slides[currentSlide].style.display = 'none';
+    currentSlide = (currentSlide + 1) % totalSlides;
+    slides[currentSlide].style.display = 'block';
+  }
+
+  slides.forEach((slide, index) => {
+    slide.style.display = index === 0 ? 'block' : 'none';
+  });
+
+  setInterval(showNextSlide, 3000);
+</script>
 </head>
 <body>
   <header>
     <div class="container">
       <h1>โรงเรียนสุวรรณคุณาธร</h1>
       <nav>
-        <ul>
-          <li><a href="#">หน้าแรก</a></li>
-          <li><a href="#">เกี่ยวกับ</a></li>
-          <li><a href="#">ข่าวสาร</a></li>
-          <li><a href="#">ติดต่อ</a></li>
-        </ul>
+       <li>
+          <a href="#">เกี่ยวกับ</a>
+          <ul class="dropdown">
+            <li><a href="#">ประวัติโรงเรียน</a></li>
+            <li><a href="#">วิสัยทัศน์ / พันธกิจ</a></li>
+            <li><a href="#">โครงสร้างองค์กร</a></li>
+          </ul>
+        </li>
+
       </nav>
     </div>
   </header>
