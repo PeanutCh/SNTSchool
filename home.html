@@ -6,23 +6,6 @@
   <title>Home - SNT School</title>
   <link rel="icon" type="image/x-icon" href="Logo.png">
   <link rel="stylesheet" href="homedesign.css" />
-  <script>
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.slide');
-  const totalSlides = slides.length;
-
-  function showNextSlide() {
-    slides[currentSlide].style.display = 'none';
-    currentSlide = (currentSlide + 1) % totalSlides;
-    slides[currentSlide].style.display = 'block';
-  }
-
-  slides.forEach((slide, index) => {
-    slide.style.display = index === 0 ? 'block' : 'none';
-  });
-
-  setInterval(showNextSlide, 3000);
-</script>
 </head>
 <body>
   <header>
@@ -30,7 +13,8 @@
       <h1>โรงเรียนสุวรรณคุณาธร</h1>
       <nav>
         <ul>
-           <li>
+          <li><a href="#">หน้าแรก</a></li>
+          <li>
             <a href="#">เกี่ยวกับ</a>
             <ul class="dropdown">
               <li><a href="#">ประวัติโรงเรียน</a></li>
@@ -38,6 +22,8 @@
               <li><a href="#">โครงสร้างองค์กร</a></li>
             </ul>
           </li>
+          <li><a href="#">ข่าวสาร</a></li>
+          <li><a href="#">ติดต่อ</a></li>
         </ul>
       </nav>
     </div>
@@ -53,6 +39,12 @@
   </section>
 
   <main class="container">
+
+    <section class="about">
+      <h2>เกี่ยวกับโรงเรียน</h2>
+      <p>โรงเรียนสุวรรณคุณาธร เป็นสถานศึกษาที่มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม จริยธรรม และความรู้ทันสมัย พร้อมรับการเปลี่ยนแปลงของสังคมและเทคโนโลยี</p>
+    </section>
+
     <section class="news">
       <h2>ข่าวสารล่าสุด</h2>
       <div class="news-item">
@@ -77,5 +69,23 @@
       <p>&copy; 2025 โรงเรียนสุวรรณคุณาธร | โดยฝ่ายพ.ว.โรงเรียน</p>
     </div>
   </footer>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showNextSlide() {
+      slides[currentSlide].style.display = 'none';
+      currentSlide = (currentSlide + 1) % totalSlides;
+      slides[currentSlide].style.display = 'block';
+    }
+
+    slides.forEach((slide, index) => {
+      slide.style.display = index === 0 ? 'block' : 'none';
+    });
+
+    setInterval(showNextSlide, 3000);
+  </script>
 </body>
 </html>
