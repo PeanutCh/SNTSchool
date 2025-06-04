@@ -91,6 +91,29 @@ nav ul li a:hover {
   padding: 20px;
 }
 
+nav ul li {
+  position: relative;
+}
+
+nav ul li .dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #004080;
+  display: none;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+nav ul li:hover .dropdown {
+  display: flex;
+}
+
+.dropdown li a {
+  padding: 10px;
+  border-bottom: 1px solid #03386b;
+}
+
 /* Footer */
 footer {
   background-color: #eee;
