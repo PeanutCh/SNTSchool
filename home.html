@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>โรงเรียนสุวรรณคุณาธร</title>
+  <title>Home - SNT School</title>
   <link rel="icon" type="image/x-icon" href="Logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="homedesign.css" />
+  <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -32,14 +31,21 @@
   </header>
 
   <section class="slideshow">
-    <div class="slide"><img src="images/slide1.jpg" alt="ภาพกิจกรรม 1" /></div>
-    <div class="slide"><img src="images/slide2.jpg" alt="ภาพกิจกรรม 2" /></div>
+    <div class="slide active">
+      <img src="images/slide1.jpg" alt="ภาพกิจกรรม 1" />
+    </div>
+    <div class="slide">
+      <img src="images/slide2.jpg" alt="ภาพกิจกรรม 2" />
+    </div>
   </section>
 
   <main class="container">
     <section class="about">
       <h2>เกี่ยวกับโรงเรียน</h2>
-      <p>โรงเรียนสุวรรณคุณาธร เป็นสถานศึกษาที่มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม จริยธรรม และความรู้ทันสมัย พร้อมรับการเปลี่ยนแปลงของสังคมและเทคโนโลยี</p>
+      <p>
+        โรงเรียนสุวรรณคุณาธร เป็นสถานศึกษาที่มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม
+        จริยธรรม และความรู้ทันสมัย พร้อมรับการเปลี่ยนแปลงของสังคมและเทคโนโลยี
+      </p>
     </section>
 
     <section class="news">
@@ -60,21 +66,15 @@
       </div>
     </section>
 
-    <!-- Discord Widget -->
-    <section class="discord-card-section" aria-label="เชิญเข้าร่วมเซิร์ฟเวอร์ Discord">
-      <div class="discord-card animate-discord" role="region" aria-live="polite" aria-atomic="true">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
-          alt="ไอคอน Discord"
-          class="discord-icon"
-          aria-hidden="true"
-          />
-        <div class="discord-info">
-          <h3>เข้าร่วมเซิร์ฟเวอร์ Discord ของโรงเรียน</h3>
-          <p>พูดคุย แลกเปลี่ยนความรู้ และรับข่าวสารต่าง ๆ จากโรงเรียนสุวรรณคุณาธร</p>
-          <a href="https://discord.gg/your-invite-code" target="_blank" rel="noopener noreferrer" class="discord-join-btn" role="button">เข้าร่วมเลย</a>
-        </div>
+    <section class="discord-card animate-discord">
+      <div class="discord-icon">🗨️</div>
+      <div class="discord-info">
+        <h3>เข้าร่วม Discord โรงเรียน</h3>
+        <p>ชุมชนพูดคุยแลกเปลี่ยนความรู้และกิจกรรมของโรงเรียน</p>
       </div>
+      <a href="https://discord.gg/yourserver" target="_blank" rel="noopener" class="discord-join-btn">
+        เข้าร่วมเลย
+      </a>
     </section>
   </main>
 
@@ -85,36 +85,33 @@
   </footer>
 
   <script>
-    // Slideshow logic
+    // Slideshow
     let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
+    const slides = document.querySelectorAll(".slide");
 
-    function showNextSlide() {
-      slides[currentSlide].style.display = 'none';
-      currentSlide = (currentSlide + 1) % totalSlides;
-      slides[currentSlide].style.display = 'block';
-    }
-    slides.forEach((slide, i) => (slide.style.display = i === 0 ? 'block' : 'none'));
-    setInterval(showNextSlide, 4000);
-
-    // SweetAlert with animation for Discord widget
-    window.addEventListener('load', () => {
-      Swal.fire({
-        title: 'หืม...?',
-        text: 'เว็บไซต์กำลังปรับปรุง ขออภัยในความไม่สะดวก',
-        icon: 'warning',
-        confirmButtonText: 'รับทราบ',
-        confirmButtonColor: '#5865F2'
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
       });
+    }
 
-      const discordCard = document.querySelector('.animate-discord');
-      if (discordCard) {
-        setTimeout(() => {
-          discordCard.style.opacity = '1';
-          discordCard.style.transform = 'translateY(0)';
-        }, 500);
-      }
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    setInterval(nextSlide, 3500);
+
+    // SweetAlert site maintenance popup
+    window.addEventListener("load", () => {
+      Swal.fire({
+        title: "หืม...?",
+        text: "เว็บไซต์กำลังปรับปรุง ขออภัยในความไม่สะดวก",
+        icon: "warning",
+        confirmButtonText: "รับทราบ",
+        background: "#e6f0ff",
+        confirmButtonColor: "#0052cc",
+      });
     });
   </script>
 </body>
