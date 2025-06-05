@@ -2,9 +2,10 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Home - SNT School</title>
-  <link rel="icon" type="image/x-icon" href="Logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>โรงเรียนสุวรรณคุณาธร</title>
+  <link rel="icon" type="image/x-icon" href="Logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="homedesign.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -31,8 +32,8 @@
   </header>
 
   <section class="slideshow">
-    <div class="slide"><img src="images/slide1.jpg" alt="ภาพกิจกรรม 1"></div>
-    <div class="slide"><img src="images/slide2.jpg" alt="ภาพกิจกรรม 2"></div>
+    <div class="slide"><img src="images/slide1.jpg" alt="ภาพกิจกรรม 1" /></div>
+    <div class="slide"><img src="images/slide2.jpg" alt="ภาพกิจกรรม 2" /></div>
   </section>
 
   <main class="container">
@@ -44,14 +45,14 @@
     <section class="news">
       <h2>ข่าวสารล่าสุด</h2>
       <div class="news-item">
-        <img src="images/news1.jpg" alt="ข่าว 1">
+        <img src="images/news1.jpg" alt="ข่าว 1" />
         <div class="news-content">
           <h3>กิจกรรมเปิดบ้านวิชาการ</h3>
           <p>นักเรียนและผู้ปกครองร่วมชมผลงานและนิทรรศการทางวิชาการจากทุกระดับชั้น</p>
         </div>
       </div>
       <div class="news-item">
-        <img src="images/news2.jpg" alt="ข่าว 2">
+        <img src="images/news2.jpg" alt="ข่าว 2" />
         <div class="news-content">
           <h3>ค่ายวิทยาศาสตร์</h3>
           <p>นักเรียนเข้าร่วมกิจกรรม STEM ส่งเสริมความคิดสร้างสรรค์และการทดลอง</p>
@@ -59,14 +60,19 @@
       </div>
     </section>
 
-    <!-- 🔹 Discord Widget -->
-    <section class="discord-card-section">
-      <div class="discord-card animate-discord">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord Icon" class="discord-icon">
+    <!-- Discord Widget -->
+    <section class="discord-card-section" aria-label="เชิญเข้าร่วมเซิร์ฟเวอร์ Discord">
+      <div class="discord-card animate-discord" role="region" aria-live="polite" aria-atomic="true">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
+          alt="ไอคอน Discord"
+          class="discord-icon"
+          aria-hidden="true"
+          />
         <div class="discord-info">
           <h3>เข้าร่วมเซิร์ฟเวอร์ Discord ของโรงเรียน</h3>
           <p>พูดคุย แลกเปลี่ยนความรู้ และรับข่าวสารต่าง ๆ จากโรงเรียนสุวรรณคุณาธร</p>
-          <a href="https://discord.gg/uvN4EDyphZ" target="_blank" class="discord-join-btn">เข้าร่วมเลย</a>
+          <a href="https://discord.gg/your-invite-code" target="_blank" rel="noopener noreferrer" class="discord-join-btn" role="button">เข้าร่วมเลย</a>
         </div>
       </div>
     </section>
@@ -79,7 +85,7 @@
   </footer>
 
   <script>
-    // Slideshow
+    // Slideshow logic
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
@@ -89,16 +95,11 @@
       currentSlide = (currentSlide + 1) % totalSlides;
       slides[currentSlide].style.display = 'block';
     }
+    slides.forEach((slide, i) => (slide.style.display = i === 0 ? 'block' : 'none'));
+    setInterval(showNextSlide, 4000);
 
-    slides.forEach((slide, index) => {
-      slide.style.display = index === 0 ? 'block' : 'none';
-    });
-
-    setInterval(showNextSlide, 3000);
-
-    // SweetAlert + Animation on load
+    // SweetAlert with animation for Discord widget
     window.addEventListener('load', () => {
-      // SweetAlert แจ้งเตือน
       Swal.fire({
         title: 'หืม...?',
         text: 'เว็บไซต์กำลังปรับปรุง ขออภัยในความไม่สะดวก',
@@ -107,13 +108,12 @@
         confirmButtonColor: '#5865F2'
       });
 
-      // Discord Widget Animation
       const discordCard = document.querySelector('.animate-discord');
       if (discordCard) {
         setTimeout(() => {
           discordCard.style.opacity = '1';
           discordCard.style.transform = 'translateY(0)';
-        }, 400);
+        }, 500);
       }
     });
   </script>
