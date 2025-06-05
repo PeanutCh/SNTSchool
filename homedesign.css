@@ -201,81 +201,89 @@ main section:last-child {
 }
 
 .discord-card {
-  background: linear-gradient(135deg, #82b1ff 0%, #448aff 100%);
-  border-radius: 12px;
-  padding: 1.5rem 2rem;
+  max-width: 980px;
+  background: #fff;
+  margin: 0 auto;
+  padding: 2.8rem 3rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgb(88 101 242 / 0.25);
   display: flex;
+  gap: 2.5rem;
   align-items: center;
-  gap: 1.8rem;
-  box-shadow: 0 8px 25px rgba(68, 138, 255, 0.4);
+  flex-wrap: wrap;
   opacity: 0;
-  transform: translateY(30px);
-  animation: slideUpFadeIn 1s ease forwards;
-  max-width: 600px;
-  margin: 0 auto 3rem auto;
+  transform: translateY(40px);
+  transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
+
 .discord-icon {
-  font-size: 3.5rem;
-  user-select: none;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
 }
+
+.discord-info {
+  flex: 1 1 320px;
+}
+
 .discord-info h3 {
-  margin-bottom: 0.3rem;
+  font-size: 1.8rem;
+  margin: 0 0 0.6rem;
+  color: #5865f2;
   font-weight: 700;
-  color: #e3f2fd;
-  font-size: 1.6rem;
 }
+
 .discord-info p {
-  color: #bbdefb;
-  font-weight: 500;
   font-size: 1.1rem;
+  margin: 0 0 1.8rem;
+  color: #444;
+  line-height: 1.5;
 }
+
 .discord-join-btn {
-  background-color: #e3f2fd;
-  color: #1565c0;
-  font-weight: 700;
-  font-size: 1.15rem;
-  padding: 0.65rem 1.8rem;
-  border-radius: 50px;
+  background-color: #5865f2;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 12px;
   text-decoration: none;
-  box-shadow: 0 6px 15px rgb(27 82 165 / 0.5);
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  user-select: none;
+  display: inline-block;
+  transition: background-color 0.35s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 6px 12px rgb(88 101 242 / 0.4);
+  cursor: pointer;
 }
+
 .discord-join-btn:hover,
 .discord-join-btn:focus {
-  background-color: #1565c0;
-  color: #e3f2fd;
-  box-shadow: 0 10px 30px rgb(21 101 192 / 0.7);
+  background-color: #4753d4;
+  box-shadow: 0 8px 18px rgb(71 83 212 / 0.6);
   transform: translateY(-3px);
   outline: none;
 }
 
-/* Animation */
-@keyframes slideUpFadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Animation trigger class */
+.animate-discord {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 /* Footer */
 footer {
-  background-color: #000261;
-  color: #ffffff;
+  background-color: #5865f2;
+  color: #f0f4ff;
   padding: 1.6rem 0;
   text-align: center;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   letter-spacing: 0.05em;
   user-select: none;
-  box-shadow: 0 -3px 10px rgb(21 101 192 / 0.35);
+  box-shadow: 0 -3px 10px rgb(88 101 242 / 0.35);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   nav ul {
     gap: 1rem;
-    flex-wrap: wrap;
   }
   .news-item {
     flex-direction: column;
@@ -283,17 +291,15 @@ footer {
   .news-item img {
     width: 100%;
     height: auto;
-    border-radius: 10px 10px 0 0;
   }
   .discord-card {
     flex-direction: column;
     text-align: center;
-    gap: 1rem;
   }
   .discord-icon {
-    margin-bottom: 0;
+    margin-bottom: 1.4rem;
   }
   .discord-info h3 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 }
