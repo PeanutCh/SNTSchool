@@ -123,7 +123,7 @@ nav ul .dropdown li a:hover {
 /* Main sections */
 main section {
   padding: 3rem 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 0px solid #ddd;
 }
 
 main section:last-child {
