@@ -1,172 +1,98 @@
-:root {
-  --main-color: #004a99;
-  --accent-color: #e0f0ff;
-  --font: 'Sarabun', sans-serif;
-}
-
 body {
-  font-family: var(--font);
+  font-family: 'Sarabun', sans-serif;
   margin: 0;
-  background: linear-gradient(to bottom, #ffffff, #f5f7fa);
-  color: #222;
-}
-
-header {
-  background-color: var(--main-color);
-  color: white;
-  padding: 20px 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 0;
+  background-color: #fefefe;
+  color: #333;
 }
 
 .container {
   width: 90%;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
+}
+
+/* Header */
+header {
+  background-color: #5865F2;
+  color: white;
+  padding: 20px 0;
 }
 
 header h1 {
   margin: 0;
   font-size: 1.8rem;
+  text-align: center;
 }
 
 nav ul {
   list-style: none;
   padding: 0;
+  margin: 10px 0 0;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
-  margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 nav ul li {
   position: relative;
 }
 
-nav a {
+nav ul li a {
   color: white;
   text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: background 0.3s;
 }
 
-nav a:hover {
-  background-color: rgba(255,255,255,0.2);
-}
-
-.dropdown {
+nav ul .dropdown {
   display: none;
   position: absolute;
-  top: 35px;
-  background-color: white;
-  color: black;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  padding: 10px 0;
-  border-radius: 8px;
-  z-index: 10;
+  background: #4752c4;
+  top: 100%;
+  left: 0;
+  padding: 10px;
+  border-radius: 6px;
 }
 
-nav li:hover .dropdown {
+nav ul li:hover .dropdown {
   display: block;
 }
 
-.dropdown li a {
-  display: block;
-  padding: 10px 20px;
-  color: var(--main-color);
-}
-
+/* Slideshow */
 .slideshow {
-  position: relative;
-  overflow: hidden;
-  height: 300px;
-  background: #ccc;
-}
-
-.slide {
-  position: absolute;
   width: 100%;
-  height: 100%;
-  display: none;
+  overflow: hidden;
 }
 
 .slide img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
-main {
+/* About / News Sections */
+main section {
   padding: 40px 0;
-}
-
-section {
-  margin-bottom: 40px;
-}
-
-h2 {
-  color: var(--main-color);
-  border-left: 6px solid var(--main-color);
-  padding-left: 12px;
-  margin-bottom: 20px;
-}
-
-.about p {
-  font-size: 1.1rem;
-  line-height: 1.6;
 }
 
 .news-item {
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
-  margin-bottom: 30px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  overflow: hidden;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .news-item img {
-  width: 100%;
-  max-width: 300px;
-  object-fit: cover;
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
 }
 
 .news-content {
   flex: 1;
-  padding: 20px;
 }
 
-.news-content h3 {
-  margin-top: 0;
-  color: var(--main-color);
-}
-
-footer {
-  background-color: var(--main-color);
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .news-item {
-    flex-direction: column;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  header h1 {
-    font-size: 1.4rem;
-  }
-}
-
-/* ส่วนตกแต่งทั่วไป */
+/* Discord Widget Section */
 .discord-card-section {
   background-color: #f3f6fb;
   padding: 40px 0;
@@ -225,6 +151,14 @@ footer {
   transform: scale(1.05);
 }
 
+/* Footer */
+footer {
+  background: #1e1e2f;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .discord-card {
@@ -240,5 +174,15 @@ footer {
   .discord-info h3 {
     font-size: 1.3rem;
   }
-}
 
+  .news-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .news-item img {
+    width: 100%;
+    max-width: 300px;
+  }
+}
