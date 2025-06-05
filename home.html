@@ -2,15 +2,17 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Home - SNT School</title>
-  <link rel="icon" type="image/x-icon" href="Logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>โรงเรียนสุวรรณคุณาธร</title>
+  <link rel="icon" type="image/png" href="logo.png" />
   <link rel="stylesheet" href="homedesign.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <header>
-    <div class="container">
+    <div class="container header-flex">
+      <img src="logo.png" alt="SNT Logo" class="logo" />
       <h1>โรงเรียนสุวรรณคุณาธร</h1>
       <nav>
         <ul>
@@ -31,34 +33,31 @@
   </header>
 
   <section class="slideshow">
-    <div class="slide active">
-      <img src="images/slide1.jpg" alt="ภาพกิจกรรม 1" />
+    <div class="slide">
+      <img src="images/slide1.jpg" alt="ภาพกิจกรรม 1">
     </div>
     <div class="slide">
-      <img src="images/slide2.jpg" alt="ภาพกิจกรรม 2" />
+      <img src="images/slide2.jpg" alt="ภาพกิจกรรม 2">
     </div>
   </section>
 
   <main class="container">
     <section class="about">
       <h2>เกี่ยวกับโรงเรียน</h2>
-      <p>
-        โรงเรียนสุวรรณคุณาธร เป็นสถานศึกษาที่มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม
-        จริยธรรม และความรู้ทันสมัย พร้อมรับการเปลี่ยนแปลงของสังคมและเทคโนโลยี
-      </p>
+      <p>โรงเรียนสุวรรณคุณาธร เป็นสถานศึกษาที่มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม จริยธรรม และความรู้ทันสมัย พร้อมรับการเปลี่ยนแปลงของสังคมและเทคโนโลยี</p>
     </section>
 
     <section class="news">
       <h2>ข่าวสารล่าสุด</h2>
       <div class="news-item">
-        <img src="images/news1.jpg" alt="ข่าว 1" />
+        <img src="images/news1.jpg" alt="ข่าว 1">
         <div class="news-content">
           <h3>กิจกรรมเปิดบ้านวิชาการ</h3>
           <p>นักเรียนและผู้ปกครองร่วมชมผลงานและนิทรรศการทางวิชาการจากทุกระดับชั้น</p>
         </div>
       </div>
       <div class="news-item">
-        <img src="images/news2.jpg" alt="ข่าว 2" />
+        <img src="images/news2.jpg" alt="ข่าว 2">
         <div class="news-content">
           <h3>ค่ายวิทยาศาสตร์</h3>
           <p>นักเรียนเข้าร่วมกิจกรรม STEM ส่งเสริมความคิดสร้างสรรค์และการทดลอง</p>
@@ -66,15 +65,13 @@
       </div>
     </section>
 
-    <section class="discord-card animate-discord">
-      <div class="discord-icon">🗨️</div>
-      <div class="discord-info">
-        <h3>เข้าร่วม Discord โรงเรียน</h3>
-        <p>ชุมชนพูดคุยแลกเปลี่ยนความรู้และกิจกรรมของโรงเรียน</p>
+    <section class="discord-box">
+      <img src="images/discord-logo.png" alt="Discord" />
+      <div>
+        <h3>เซิร์ฟเวอร์ Discord</h3>
+        <p>เข้าร่วมชุมชนของโรงเรียน พูดคุย ถามคำถาม และรับข้อมูลข่าวสารแบบเรียลไทม์</p>
+        <a href="https://discord.com/invite/your-link" target="_blank" class="join-btn">เข้าร่วม Discord</a>
       </div>
-      <a href="https://discord.gg/yourserver" target="_blank" rel="noopener" class="discord-join-btn">
-        เข้าร่วมเลย
-      </a>
     </section>
   </main>
 
@@ -85,34 +82,30 @@
   </footer>
 
   <script>
-    // Slideshow
-    let currentSlide = 0;
-    const slides = document.querySelectorAll(".slide");
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
-      });
-    }
-
-    function nextSlide() {
-      currentSlide = (currentSlide + 1) % slides.length;
-      showSlide(currentSlide);
-    }
-
-    setInterval(nextSlide, 3500);
-
-    // SweetAlert site maintenance popup
-    window.addEventListener("load", () => {
-      Swal.fire({
-        title: "หืม...?",
-        text: "เว็บไซต์กำลังปรับปรุง ขออภัยในความไม่สะดวก",
-        icon: "warning",
-        confirmButtonText: "รับทราบ",
-        background: "#ffffff",
-        confirmButtonColor: "#000261",
-      });
+    // SweetAlert แจ้งเตือน
+    Swal.fire({
+      icon: 'warning',
+      title: 'หืม...?',
+      text: 'เว็บไซต์กำลังปรับปรุง ขออภัยในความไม่สะดวก',
+      confirmButtonText: 'รับทราบ'
     });
+
+    // Slide Show
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showNextSlide() {
+      slides[currentSlide].style.display = 'none';
+      currentSlide = (currentSlide + 1) % totalSlides;
+      slides[currentSlide].style.display = 'block';
+    }
+
+    slides.forEach((slide, index) => {
+      slide.style.display = index === 0 ? 'block' : 'none';
+    });
+
+    setInterval(showNextSlide, 3000);
   </script>
 </body>
 </html>
