@@ -5,20 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Home - SNT School</title>
   <link rel="icon" type="image/x-icon" href="Logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="homedesign.css" />
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <header>
-    <div class="container nav-container">
-      <h1 class="logo">โรงเรียนสุวรรณคุณาธร</h1>
-      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-      <nav id="nav">
-        <ul class="navbar">
+    <div class="container">
+      <h1>โรงเรียนสุวรรณคุณาธร</h1>
+      <nav>
+        <ul>
           <li><a href="#">หน้าแรก</a></li>
-          <li class="has-dropdown">
+          <li>
             <a href="#">เกี่ยวกับ</a>
             <ul class="dropdown">
               <li><a href="#">ประวัติโรงเรียน</a></li>
@@ -34,38 +31,34 @@
   </header>
 
   <section class="slideshow">
-    <div class="slide active">
+    <div class="slide">
       <img src="images/slide1.jpg" alt="ภาพกิจกรรม 1">
-      <div class="caption">กิจกรรมสร้างสรรค์ของนักเรียน</div>
     </div>
     <div class="slide">
       <img src="images/slide2.jpg" alt="ภาพกิจกรรม 2">
-      <div class="caption">การเรียนรู้นอกห้องเรียน</div>
     </div>
   </section>
 
   <main class="container">
-    <section class="about" data-aos="fade-up">
+    <section class="about">
       <h2>เกี่ยวกับโรงเรียน</h2>
       <p>โรงเรียนสุวรรณคุณาธร เป็นสถานศึกษาที่มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม จริยธรรม และความรู้ทันสมัย พร้อมรับการเปลี่ยนแปลงของสังคมและเทคโนโลยี</p>
     </section>
 
-    <section class="news" data-aos="fade-up" data-aos-delay="100">
+    <section class="news">
       <h2>ข่าวสารล่าสุด</h2>
-      <div class="news-grid">
-        <div class="news-item card">
-          <img src="images/news1.jpg" alt="ข่าว 1">
-          <div class="news-content">
-            <h3>กิจกรรมเปิดบ้านวิชาการ</h3>
-            <p>นักเรียนและผู้ปกครองร่วมชมผลงานและนิทรรศการทางวิชาการจากทุกระดับชั้น</p>
-          </div>
+      <div class="news-item">
+        <img src="images/news1.jpg" alt="ข่าว 1">
+        <div class="news-content">
+          <h3>กิจกรรมเปิดบ้านวิชาการ</h3>
+          <p>นักเรียนและผู้ปกครองร่วมชมผลงานและนิทรรศการทางวิชาการจากทุกระดับชั้น</p>
         </div>
-        <div class="news-item card">
-          <img src="images/news2.jpg" alt="ข่าว 2">
-          <div class="news-content">
-            <h3>ค่ายวิทยาศาสตร์</h3>
-            <p>นักเรียนเข้าร่วมกิจกรรม STEM ส่งเสริมความคิดสร้างสรรค์และการทดลอง</p>
-          </div>
+      </div>
+      <div class="news-item">
+        <img src="images/news2.jpg" alt="ข่าว 2">
+        <div class="news-content">
+          <h3>ค่ายวิทยาศาสตร์</h3>
+          <p>นักเรียนเข้าร่วมกิจกรรม STEM ส่งเสริมความคิดสร้างสรรค์และการทดลอง</p>
         </div>
       </div>
     </section>
@@ -77,46 +70,22 @@
     </div>
   </footer>
 
-  <button id="backToTop" title="กลับขึ้นด้านบน">↑</button>
-
-  <!-- JS Scripts -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
-    AOS.init();
-
-    // SweetAlert2 popup
-    window.addEventListener('DOMContentLoaded', () => {
-      Swal.fire({
-        icon: 'warning',
-        title: 'หืม...?',
-        text: 'เว็บไซต์กำลังปรับปรุง ขออภัยในความไม่สะดวก',
-        confirmButtonText: 'รับทราบ'
-      });
-    });
-
-    // Slideshow
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
-    function showNextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-    setInterval(showNextSlide, 4000);
+    const totalSlides = slides.length;
 
-    // Mobile nav toggle
-    const toggle = document.getElementById('menu-toggle');
-    const nav = document.getElementById('nav');
-    toggle.addEventListener('click', () => {
-      nav.classList.toggle('active');
+    function showNextSlide() {
+      slides[currentSlide].style.display = 'none';
+      currentSlide = (currentSlide + 1) % totalSlides;
+      slides[currentSlide].style.display = 'block';
+    }
+
+    slides.forEach((slide, index) => {
+      slide.style.display = index === 0 ? 'block' : 'none';
     });
 
-    // Back to top button
-    const backToTop = document.getElementById("backToTop");
-    window.onscroll = function () {
-      backToTop.style.display = window.scrollY > 300 ? "block" : "none";
-    };
-    backToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    setInterval(showNextSlide, 3000);
   </script>
 </body>
 </html>
