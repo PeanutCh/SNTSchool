@@ -6,6 +6,7 @@
   <title>Home - SNT School</title>
   <link rel="icon" type="image/x-icon" href="Logo.png">
   <link rel="stylesheet" href="homedesign.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
   <header>
@@ -39,7 +40,6 @@
   </section>
 
   <main class="container">
-
     <section class="about">
       <h2>เกี่ยวกับโรงเรียน</h2>
       <p>โรงเรียนสุวรรณคุณาธร เป็นสถานศึกษาที่มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม จริยธรรม และความรู้ทันสมัย พร้อมรับการเปลี่ยนแปลงของสังคมและเทคโนโลยี</p>
@@ -71,6 +71,7 @@
   </footer>
 
   <script>
+    // Slideshow logic
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
@@ -86,6 +87,16 @@
     });
 
     setInterval(showNextSlide, 3000);
+
+    // SweetAlert2 popup
+    window.addEventListener('DOMContentLoaded', () => {
+      Swal.fire({
+        icon: 'warning',
+        title: 'หืม...?',
+        text: 'เว็บไซต์กำลังปรับปรุง ขออภัยในความไม่สะดวก',
+        confirmButtonText: 'รับทราบ'
+      });
+    });
   </script>
 </body>
 </html>
