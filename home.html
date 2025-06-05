@@ -96,6 +96,16 @@
     });
 
     setInterval(showNextSlide, 3000);
+
+    window.addEventListener('load', () => {
+    const discordCard = document.querySelector('.animate-discord');
+    if (discordCard) {
+      setTimeout(() => {
+        discordCard.style.opacity = '1';
+        discordCard.style.transform = 'translateY(0)';
+      }, 300);
+    }
+  });
   </script>
 </body>
 </html>
