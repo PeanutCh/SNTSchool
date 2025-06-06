@@ -8,6 +8,99 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="icon" type="image/x-icon" href="Logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+
+    
+    body {
+  font-family: 'Sarabun', sans-serif;
+  background: linear-gradient(135deg, #00038f, #61b3d4);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 3, 143, 0.3);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  color: #00038f;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.6rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #00038f;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #001970;
+}
+
+#error-message {
+  color: red;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+  </style>
+
+<div class="container">
+      <h1>โรงเรียนสุวรรณคุณาธร</h1>
+      <nav>
+        <ul>
+          <li><a href="#">หน้าแรก</a></li>
+          <li>
+            <a href="#">เกี่ยวกับ</a>
+            <ul class="dropdown">
+              <li><a href="#">ประวัติโรงเรียน</a></li>
+              <li><a href="#">วิสัยทัศน์ / พันธกิจ</a></li>
+              <li><a href="#">โครงสร้างองค์กร</a></li>
+            </ul>
+            
+          </li>
+            <li>
+            <a href="#">ระบบสำหรับนักเรียน</a>
+            <ul class="dropdown">
+              <li><a href="Program.html" class="active">แผนความถนัด</a></li>
+            </ul>
+            
+          </li>
+          
+          <li><a href="#">ข่าวสาร</a></li>
+          <li><a href="#">ติดต่อ</a></li>
+        </ul>
+        <div id="user-info"></div>
+      </nav>
+    </div>
+  
 </head>
 <body>
   <div class="login-container">
