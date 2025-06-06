@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ระบบจัดการข้อมูลโรงเรียน</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
+    }
+    body {
+      background-color: #f4f6f9;
+      color: #333;
+      padding: 1rem;
+    }
+    header, footer {
+      text-align: center;
+      background-color: #5865f2;
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .admin-tools, .teacher-tools {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 1rem;
+    }
+    button {
+      background: #5865f2;
+      color: white;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: #4753d4;
+    }
+    input {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ระบบจัดการข้อมูลโรงเรียน</h1>
+  </header>
+
+  <div class="container">
+    <div id="user-panel">
+      <button id="login-btn">เข้าสู่ระบบ</button>
+      <button id="logout-btn" style="display:none">ออกจากระบบ</button>
+    </div>
+
+    <main id="role-content"></main>
+  </div>
+
+  <footer>
+    &copy; 2025 โรงเรียนตัวอย่าง | พัฒนาโดยนักเรียนสาย IT
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const content = document.getElementById('role-content');
+
+    loginBtn.onclick = () => {
+      signInWithPopup(auth, provider).then(async result => {
+        const user = result.user;
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (!userDoc.exists()) {
+          await setDoc(doc(db, "users", user.uid), {
+            displayName: user.displayName,
+            email: user.email,
+            role: "student" // ตั้งค่า default เป็นนักเรียน
+          });
+          Swal.fire("เข้าสู่ระบบครั้งแรก", "บัญชีนี้ถูกตั้งเป็นนักเรียน", "info");
+        }
+      });
+    };
+
+    logoutBtn.onclick = () => {
+      signOut(auth);
+    };
+
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "inline-block";
+
+        const snap = await getDoc(doc(db, "users", user.uid));
+        const role = snap.exists() ? snap.data().role : "student";
+        renderByRole(role);
+      } else {
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+        content.innerHTML = "";
+      }
+    });
+
+    function renderByRole(role) {
+      content.innerHTML = ""; // ล้างก่อน
+      if (role === "developer" || role === "admin") {
+        content.innerHTML += `
+          <section class="admin-tools">
+            <h2>จัดการข่าวสาร / รูปภาพ</h2>
+            <button onclick="Swal.fire('ยังไม่รองรับ', 'ระบบอัปโหลดภาพอยู่ระหว่างพัฒนา', 'info')">เพิ่มข่าว</button>
+            <button onclick="Swal.fire('ยังไม่รองรับ', 'ระบบอัปโหลดภาพอยู่ระหว่างพัฒนา', 'info')">เพิ่มภาพกิจกรรม</button>
+          </section>
+        `;
+      }
+      if (role === "teacher") {
+        content.innerHTML += `
+          <section class="teacher-tools">
+            <h2>เพิ่มวิชาเลือก</h2>
+            <form id="subject-form">
+              <input type="text" name="subject" placeholder="ชื่อวิชา" required />
+              <button type="submit">เพิ่มวิชา</button>
+            </form>
+          </section>
+        `;
+        document.getElementById('subject-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const subject = e.target.subject.value;
+          await addDoc(collection(db, "subjects"), { name: subject, createdAt: new Date() });
+          Swal.fire("สำเร็จ", `เพิ่มวิชา "${subject}" แล้ว`, "success");
+          e.target.reset();
+        });
+      }
+      if (role === "student") {
+        content.innerHTML += `<p>ยินดีต้อนรับนักเรียน! คุณสามารถดูข่าวสารและวิชาที่เปิดได้ที่เมนูหลัก</p>`;
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
