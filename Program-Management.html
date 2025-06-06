@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ระบบจัดการแผนความถนัด - โรงเรียนสุวรรณคุณาธร</title>
+  <link rel="icon" type="image/x-icon" href="Logo.png" />
+  <link rel="stylesheet" href="homedesign.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <main class="container">
+    <h2>เพิ่มแผนความถนัด</h2>
+    <form id="subject-form">
+      <div>
+        <label for="name">ชื่อแผน:</label>
+        <input type="text" id="name" required />
+      </div>
+      <div>
+        <label for="description">คำอธิบาย:</label>
+        <textarea id="description" rows="4"></textarea>
+      </div>
+      <button type="submit">เพิ่มแผน</button>
+    </form>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
+    import {
+      getAuth,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCYFFv3ZPCsBmx-yhQap_ovKGPAbdLl4-M",
+      authDomain: "snt-school.firebaseapp.com",
+      projectId: "snt-school",
+      storageBucket: "snt-school.appspot.com",
+      messagingSenderId: "542117467094",
+      appId: "1:542117467094:web:36dd44c75e14e287660a77",
+      measurementId: "G-TJK1J6ED2L"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
+
+    const form = document.getElementById("subject-form");
+
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        Swal.fire({
+          icon: "warning",
+          title: "กรุณาเข้าสู่ระบบก่อนเพิ่มวิชา",
+          confirmButtonText: "เข้าสู่ระบบ",
+        }).then(() => {
+          window.location.href = "login.html";
+        });
+        return;
+      }
+
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const description = document.getElementById("description").value.trim();
+
+        if (!name) {
+          Swal.fire("กรุณากรอกชื่อวิชา");
+          return;
+        }
+
+        try {
+          await addDoc(collection(db, "subjects"), {
+            name,
+            description,
+            createdAt: serverTimestamp(),
+            teacher: user.uid
+          });
+
+          Swal.fire("เพิ่มวิชาเรียบร้อยแล้ว!", "", "success").then(() => {
+            form.reset();
+          });
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาด:", error);
+          Swal.fire("เกิดข้อผิดพลาด", error.message, "error");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
