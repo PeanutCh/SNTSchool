@@ -122,6 +122,16 @@ nav ul .dropdown li a:hover {
   border-radius: 12px;
 }
 
+.profilepic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;      
+  object-fit: cover;      
+  vertical-align: middle;  
+  margin-right: 8px;     
+  border: 1px solid #00038f;  
+}
+
 /* Main sections */
 main section {
   padding: 3rem 0;
@@ -310,4 +320,31 @@ footer {
   .discord-info h3 {
     font-size: 1.5rem;
   }
+}
+
+nav #user-info {
+  margin-left: auto;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+nav #user-info .login-btn,
+nav #user-info button {
+  background: #fff;
+  color: #00038f;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+nav #user-info button:hover,
+nav #user-info .login-btn:hover {
+  background: #e6e6ff;
 }
