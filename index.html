@@ -37,7 +37,8 @@
         if (docSnap.exists()) {
           const userData = docSnap.data();
           userInfo.innerHTML = `
-            <span>👤 ${userData.displayName || userData.username} (${userData.role})</span>
+            <img src="${userData.photoURL}" />
+            <span>${userData.displayName || userData.username} (${userData.role})</span>
             <button onclick="logout()">ออกจากระบบ</button>
           `;
         } else {
