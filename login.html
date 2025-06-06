@@ -46,9 +46,11 @@
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "index.html"; // กลับหน้าแรกหลัง Login
+        window.location.href = "home.html"; // กลับหน้าแรกหลัก
       } catch (error) {
-        errorMessage.textContent = "เข้าสู่ระบบไม่สำเร็จ: " + error.message;
+        <!-- errorMessage.textContent = "เข้าสู่ระบบไม่สำเร็จ: " + error.message; -->
+        
+        errorMessage.textContent = "เข้าสู่ระบบไม่สำเร็จ โปรดลองอีกครั้งหรือติดต่อผู้ดูแลระบบ"
       }
     });
   </script>
