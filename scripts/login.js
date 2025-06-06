@@ -33,8 +33,7 @@ loginForm.addEventListener("submit", async (e) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // ✅ เข้าสู่ระบบสำเร็จ — redirect ไปหน้า index.html
-    window.location.href = "index.html";
+    window.location.href = "Home.html";
   } catch (error) {
     console.error("Login error:", error);
     errorMsg.textContent = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
