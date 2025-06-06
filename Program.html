@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>แผนความถนัด - โรงเรียนสุวรรณคุณาธร</title>
+  <link rel="icon" type="image/x-icon" href="Logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="homedesign.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCYFFv3ZPCsBmx-yhQap_ovKGPAbdLl4-M",
+      authDomain: "snt-school.firebaseapp.com",
+      projectId: "snt-school",
+      storageBucket: "snt-school.firebasestorage.app",
+      messagingSenderId: "542117467094",
+      appId: "1:542117467094:web:36dd44c75e14e287660a77",
+      measurementId: "G-TJK1J6ED2L"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
+
+    
+    async function loadSubjects() {
+      const subjectsList = document.getElementById("subjects-list");
+      subjectsList.innerHTML = "กำลังโหลดวิชา...";
+
+      try {
+        const querySnapshot = await getDocs(collection(db, "subjects"));
+        if (querySnapshot.empty) {
+          subjectsList.innerHTML = "<p>ยังไม่มีแผนความถนัดในระบบ</p>";
+          return;
+        }
+
+        subjectsList.innerHTML = ""; // เคลียร์ของเก่า
+        querySnapshot.forEach(doc => {
+          const subject = doc.data();
+          const div = document.createElement("div");
+          div.className = "subject-item";
+          div.innerHTML = `
+            <h3>${subject.name}</h3>
+            <p>${subject.description || '-'}</p>
+          `;
+          subjectsList.appendChild(div);
+        });
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาดในการโหลดวิชา:", error);
+        subjectsList.innerHTML = "<p>ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่อีกครั้ง</p>";
+      }
+    }
+
+    // ตรวจสอบการล็อกอินและโหลดข้อมูล
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        loadSubjects();
+        document.getElementById("user-info").textContent = `ยินดีต้อนรับ คุณ ${user.displayName || user.email}`;
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "กรุณาเข้าสู่ระบบ",
+          text: "คุณต้องเข้าสู่ระบบเพื่อดูแผนความถนัด",
+          confirmButtonText: "ไปหน้าเข้าสู่ระบบ",
+          allowOutsideClick: false
+        }).then(() => {
+          window.location.href = "login.html";
+        });
+      }
+    });
+  </script>
+
+  <style>
+    /* เพิ่ม CSS เล็กน้อยสำหรับหน้า subjects */
+    main {
+      padding: 2rem 0;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    #user-info {
+      text-align: right;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #00038f;
+    }
+    #subjects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+    .subject-item {
+      background: white;
+      padding: 1.2rem 1.6rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .subject-item:hover {
+      box-shadow: 0 8px 20px rgb(0 0 0 / 0.12);
+    }
+    .subject-item h3 {
+      margin: 0 0 0.6rem;
+      color: #5865f2;
+      font-weight: 700;
+    }
+    .subject-item p {
+      margin: 0;
+      color: #444;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>โรงเรียนสุวรรณคุณาธร</h1>
+      <nav>
+        <ul>
+          <li><a href="Home.html">หน้าแรก</a></li>
+          <li><a href="Program.html" class="active">แผนความถนัด</a></li>
+          <li><a href="news.html">ข่าวสาร</a></li>
+          <li><a href="contact.html">ติดต่อ</a></li>
+          <li><span id="user-info"></span></li>
+          <li><a href="#" id="logout-btn" style="display:none;">ออกจากระบบ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>รายชื่อแผนความถนัด</h2>
+    <div id="subjects-list">
+      <!-- รายชื่อวิชาจะโหลดมาแสดงที่นี่ -->
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p class="copyrighttext">&copy; 2025 โรงเรียนสุวรรณคุณาธร | SNT R&D Team</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+    const auth = getAuth();
+
+    const logoutBtn = document.getElementById("logout-btn");
+    const userInfo = document.getElementById("user-info");
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        logoutBtn.style.display = "inline-block";
+      } else {
+        logoutBtn.style.display = "none";
+        userInfo.textContent = "";
+      }
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "home.html";
+    });
+  </script>
+</body>
+</html>
