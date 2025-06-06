@@ -122,6 +122,16 @@ nav ul .dropdown li a:hover {
   border-radius: 12px;
 }
 
+.profilepic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;      
+  object-fit: cover;      
+  vertical-align: middle;  
+  margin-right: 8px;     
+  border: 1px solid #00038f;  
+}
+
 /* Main sections */
 main section {
   padding: 3rem 0;
