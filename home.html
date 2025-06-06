@@ -6,8 +6,54 @@
   <title>โรงเรียนสุวรรณคุณาธร</title>
   <link rel="icon" type="image/x-icon" href="Logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="homedesign.css" />
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module">
+    // Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCYFFv3ZPCsBmx-yhQap_ovKGPAbdLl4-M",
+      authDomain: "snt-school.firebaseapp.com",
+      projectId: "snt-school",
+      storageBucket: "snt-school.appspot.com",
+      messagingSenderId: "542117467094",
+      appId: "1:542117467094:web:36dd44c75e14e287660a77",
+      measurementId: "G-TJK1J6ED2L"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const userInfo = document.getElementById("user-info");
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          userInfo.innerHTML = `
+            <img class="profilepic" src="${userData.photoURL}" />
+            <span>${userData.displayName || userData.username} (${userData.role})</span>
+            <button onclick="logout()">ออกจากระบบ</button>
+          `;
+        } else {
+          userInfo.innerHTML = "<span>ไม่พบข้อมูลผู้ใช้</span>";
+        }
+      } else {
+        userInfo.innerHTML = `<a href="login.html" class="login-btn">เข้าสู่ระบบ</a>`;
+      }
+    });
+
+    window.logout = async function () {
+      await signOut(auth);
+      location.reload();
+    };
+  </script>
 </head>
 <body>
   <header>
@@ -27,10 +73,11 @@
           <li><a href="#">ข่าวสาร</a></li>
           <li><a href="#">ติดต่อ</a></li>
         </ul>
+        <div id="user-info"></div>
       </nav>
     </div>
   </header>
-  
+
   <section class="slideshow">
     <div class="slide"><img src="images/recruit.png" alt="รับสมัครครู" /></div>
   </section>
@@ -38,7 +85,7 @@
   <main class="container">
     <section class="about">
       <h2>เกี่ยวกับโรงเรียน</h2>
-      <p>โรงเรียนสุวรรณคุณาธร เป็นสถานศึกษาที่มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม จริยธรรม และความรู้ทันสมัย พร้อมรับการเปลี่ยนแปลงของสังคมและเทคโนโลยี</p>
+      <p>โรงเรียนสุวรรณคุณาธร มุ่งเน้นการพัฒนาเยาวชนให้มีคุณธรรม จริยธรรม และความรู้ทันสมัย</p>
     </section>
 
     <section class="news">
@@ -52,19 +99,13 @@
       </div>
     </section>
 
-    <!-- Discord Widget -->
-    <section class="discord-card-section" aria-label="เชิญเข้าร่วมเซิร์ฟเวอร์ Discord">
-      <div class="discord-card animate-discord" role="region" aria-live="polite" aria-atomic="true">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
-          alt="ไอคอน Discord"
-          class="discord-icon"
-          aria-hidden="true"
-          />
+    <section class="discord-card-section">
+      <div class="discord-card animate-discord">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" class="discord-icon" />
         <div class="discord-info">
           <h3>เข้าร่วมเซิร์ฟเวอร์ Discord ของโรงเรียน</h3>
-          <p>พูดคุย แลกเปลี่ยนความรู้ และรับข่าวสารต่าง ๆ จากโรงเรียนสุวรรณคุณาธร</p>
-          <a href="https://discord.gg/uvN4EDyphZ" target="_blank" rel="noopener noreferrer" class="discord-join-btn" role="button">เข้าร่วมเลย</a>
+          <p>พูดคุย แลกเปลี่ยนความรู้ และรับข่าวสารต่าง ๆ จากโรงเรียน</p>
+          <a href="https://discord.gg/uvN4EDyphZ" target="_blank" class="discord-join-btn">เข้าร่วมเลย</a>
         </div>
       </div>
     </section>
@@ -72,16 +113,14 @@
 
   <footer>
     <div class="container">
-      <p class="copyrighttext">&copy; 2025 โรงเรียนสุวรรณคุณาธร | SNT R&D Team</p>
+      <p>&copy; 2025 โรงเรียนสุวรรณคุณาธร | SNT R&D Team</p>
     </div>
   </footer>
 
   <script>
-    // Slideshow logic
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
-
     function showNextSlide() {
       slides[currentSlide].style.display = 'none';
       currentSlide = (currentSlide + 1) % totalSlides;
@@ -90,23 +129,20 @@
     slides.forEach((slide, i) => (slide.style.display = i === 0 ? 'block' : 'none'));
     setInterval(showNextSlide, 4000);
 
-    // SweetAlert with animation for Discord widget
     window.addEventListener('load', () => {
       Swal.fire({
         title: 'แจ้งเตือนระบบ!',
-        text: 'เว็บไซต์โรงเรียนยังอยู่ในขั้นตอนพัฒนาระบบ ขออภัยหากมีข้อผิดพลาด',
+        text: 'เว็บไซต์โรงเรียนยังอยู่ในขั้นตอนพัฒนา',
         icon: 'info',
-        confirmButtonText: 'เข้าสู้เว็บไซต์',
+        confirmButtonText: 'เข้าสู่เว็บไซต์',
         confirmButtonColor: '#00038f'
       });
 
       const discordCard = document.querySelector('.animate-discord');
-      if (discordCard) {
-        setTimeout(() => {
-          discordCard.style.opacity = '1';
-          discordCard.style.transform = 'translateY(0)';
-        }, 500);
-      }
+      setTimeout(() => {
+        discordCard.style.opacity = '1';
+        discordCard.style.transform = 'translateY(0)';
+      }, 500);
     });
   </script>
 </body>
