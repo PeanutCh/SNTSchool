@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เข้าสู่ระบบ - โรงเรียนสุวรรณคุณาธร</title>
+  <link rel="stylesheet" href="login.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="login-container">
+    <h2>เข้าสู่ระบบ</h2>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="อีเมล" required />
+      <input type="password" id="password" placeholder="รหัสผ่าน" required />
+      <button type="submit">เข้าสู่ระบบ</button>
+    </form>
+    <p id="error-message"></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCYFFv3ZPCsBmx-yhQap_ovKGPAbdLl4-M",
+      authDomain: "snt-school.firebaseapp.com",
+      projectId: "snt-school",
+      storageBucket: "snt-school.firebasestorage.app",
+      messagingSenderId: "542117467094",
+      appId: "1:542117467094:web:36dd44c75e14e287660a77",
+      measurementId: "G-TJK1J6ED2L"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const form = document.getElementById('login-form');
+    const errorMessage = document.getElementById('error-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "index.html"; // กลับหน้าแรกหลัง Login
+      } catch (error) {
+        errorMessage.textContent = "เข้าสู่ระบบไม่สำเร็จ: " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
