@@ -33,7 +33,7 @@ loginForm.addEventListener("submit", async (e) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    window.location.href = "Home.html";
+    window.location.href = "home.html";
   } catch (error) {
     console.error("Login error:", error);
     errorMsg.textContent = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
