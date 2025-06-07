@@ -61,8 +61,12 @@
 
     // ตรวจสอบการล็อกอินและโหลดข้อมูล
     onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const docRef = doc(db, "users", user.uid);
+
+
+
+ if (user) {
+        loadSubjects();
+          const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const userData = docSnap.data();
@@ -82,11 +86,23 @@
     window.logout = async function () {
       await signOut(auth);
       location.reload();
-    };
+      
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "กรุณาเข้าสู่ระบบ",
+          text: "คุณต้องเข้าสู่ระบบเพื่อดูวิชาเลือก",
+          confirmButtonText: "ไปหน้าเข้าสู่ระบบ",
+          allowOutsideClick: false
+        }).then(() => {
+          window.location.href = "login.html";
+        });
+      }
+
   </script>
 
   <style>
-    /* เพิ่ม CSS เล็กน้อยสำหรับหน้า subjects */
+    
     main {
       padding: 2rem 0;
       max-width: 800px;
