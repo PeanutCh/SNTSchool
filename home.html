@@ -38,7 +38,7 @@
           const userData = docSnap.data();
           userInfo.innerHTML = `
             <img class="profilepic" src="${userData.photoURL}" />
-            <span>${userData.displayName || userData.username} (${userData.role})</span>
+            <span>${userData.displayName || userData.username}</span>
             <button onclick="logout()">ออกจากระบบ</button>
           `;
         } else {
