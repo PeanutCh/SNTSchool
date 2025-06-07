@@ -76,18 +76,6 @@
             <button onclick="logout()">ออกจากระบบ</button>
           `;
         } else {
-          userInfo.innerHTML = "<span>ไม่พบข้อมูลผู้ใช้</span>";
-        }
-      } else {
-        userInfo.innerHTML = `<a href="login.html" class="login-btn">เข้าสู่ระบบ</a>`;
-      }
-    });
-
-    window.logout = async function () {
-      await signOut(auth);
-      location.reload();
-      
-      } else {
         Swal.fire({
           icon: "warning",
           title: "กรุณาเข้าสู่ระบบ",
@@ -97,7 +85,15 @@
         }).then(() => {
           window.location.href = "login.html";
         });
+        }
       }
+    });
+
+    window.logout = async function () {
+      await signOut(auth);
+      location.reload();
+      
+     
 
   </script>
 
