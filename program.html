@@ -26,9 +26,10 @@
     };
 
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getFirestore(app);
-    const auth = getAuth();
 
+     const userInfo = document.getElementById("user-info");
     
     async function loadSubjects() {
       const subjectsList = document.getElementById("subjects-list");
@@ -59,22 +60,29 @@
     }
 
     // ตรวจสอบการล็อกอินและโหลดข้อมูล
-    onAuthStateChanged(auth, user => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        loadSubjects();
-        document.getElementById("user-info").textContent = `ยินดีต้อนรับ คุณ ${user.displayName || user.email}`;
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          userInfo.innerHTML = `
+            <img class="profilepic" src="${userData.photoURL}" />
+            <span>${userData.displayName || userData.username}</span>
+            <button onclick="logout()">ออกจากระบบ</button>
+          `;
+        } else {
+          userInfo.innerHTML = "<span>ไม่พบข้อมูลผู้ใช้</span>";
+        }
       } else {
-        Swal.fire({
-          icon: "warning",
-          title: "กรุณาเข้าสู่ระบบ",
-          text: "คุณต้องเข้าสู่ระบบเพื่อดูแผนความถนัด",
-          confirmButtonText: "ไปหน้าเข้าสู่ระบบ",
-          allowOutsideClick: false
-        }).then(() => {
-          window.location.href = "login.html";
-        });
+        userInfo.innerHTML = `<a href="login.html" class="login-btn">เข้าสู่ระบบ</a>`;
       }
     });
+
+    window.logout = async function () {
+      await signOut(auth);
+      location.reload();
+    };
   </script>
 
   <style>
