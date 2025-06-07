@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="homedesign.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- Firebase SDK -->
+
   <script type="module">
      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
@@ -59,12 +59,9 @@
       }
     }
 
-    // ตรวจสอบการล็อกอินและโหลดข้อมูล
+   
     onAuthStateChanged(auth, async (user) => {
-
-
-
- if (user) {
+     if (user) {
         loadSubjects();
           const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
@@ -92,11 +89,10 @@
     window.logout = async function () {
       await signOut(auth);
       location.reload();
-      
+    }
      
 
-  </script>
-
+    </script>
   <style>
     
     main {
