@@ -36,7 +36,9 @@
       subjectsList.innerHTML = "กำลังโหลดวิชา...";
 
       try {
-        const querySnapshot = await getDoc(collection(db, "subjects"));
+        const docRefsj = doc(db, "subjects");
+        const querySnapshot = await getDoc(docRefsj);
+       // const querySnapshot = await getDoc(collection(db, "subjects")); 
         if (querySnapshot.empty) {
           subjectsList.innerHTML = "<p>ยังไม่มีแผนความถนัดในระบบ</p>";
           return;
