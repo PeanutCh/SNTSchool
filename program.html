@@ -9,11 +9,10 @@
   <link rel="stylesheet" href="homedesign.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
   <script type="module">
-     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCYFFv3ZPCsBmx-yhQap_ovKGPAbdLl4-M",
@@ -29,23 +28,23 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-     const userInfo = document.getElementById("user-info");
-    
+    const userInfo = document.getElementById("user-info");
+
     async function loadSubjects() {
       const subjectsList = document.getElementById("subjects-list");
       subjectsList.innerHTML = "กำลังโหลดวิชา...";
 
       try {
-        const docRefsj = doc(db, "subjects");
-        const querySnapshot = await getDoc(docRefsj);
-       // const querySnapshot = await getDoc(collection(db, "subjects")); 
+        const querySnapshot = await getDocs(collection(db, "subjects"));
+        
         if (querySnapshot.empty) {
           subjectsList.innerHTML = "<p>ยังไม่มีแผนความถนัดในระบบ</p>";
           return;
         }
 
-        subjectsList.innerHTML = ""; // เคลียร์ของเก่า
-        querySnapshot.forEach(doc => {
+        subjectsList.innerHTML = ""; // Clear previous content
+
+        querySnapshot.forEach((doc) => {
           const subject = doc.data();
           const div = document.createElement("div");
           div.className = "subject-item";
@@ -61,12 +60,13 @@
       }
     }
 
-   
     onAuthStateChanged(auth, async (user) => {
-     if (user) {
+      if (user) {
         loadSubjects();
-          const docRef = doc(db, "users", user.uid);
+
+        const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
+
         if (docSnap.exists()) {
           const userData = docSnap.data();
           userInfo.innerHTML = `
@@ -75,15 +75,15 @@
             <button onclick="logout()">ออกจากระบบ</button>
           `;
         } else {
-        Swal.fire({
-          icon: "warning",
-          title: "กรุณาเข้าสู่ระบบ",
-          text: "คุณต้องเข้าสู่ระบบเพื่อดูวิชาเลือก",
-          confirmButtonText: "ไปหน้าเข้าสู่ระบบ",
-          allowOutsideClick: false
-        }).then(() => {
-          window.location.href = "login.html";
-        });
+          Swal.fire({
+            icon: "warning",
+            title: "กรุณาเข้าสู่ระบบ",
+            text: "คุณต้องเข้าสู่ระบบเพื่อดูวิชาเลือก",
+            confirmButtonText: "ไปหน้าเข้าสู่ระบบ",
+            allowOutsideClick: false
+          }).then(() => {
+            window.location.href = "login.html";
+          });
         }
       }
     });
@@ -92,22 +92,21 @@
       await signOut(auth);
       location.reload();
     }
-     
+  </script>
 
-    </script>
   <style>
-    
     main {
       padding: 2rem 0;
       max-width: 800px;
       margin: 0 auto;
     }
-   
+
     #subjects-list {
       display: flex;
       flex-direction: column;
       gap: 1.4rem;
     }
+
     .subject-item {
       background: white;
       padding: 1.2rem 1.6rem;
@@ -115,14 +114,17 @@
       box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
       transition: box-shadow 0.3s ease;
     }
+
     .subject-item:hover {
       box-shadow: 0 8px 20px rgb(0 0 0 / 0.12);
     }
+
     .subject-item h3 {
       margin: 0 0 0.6rem;
       color: #5865f2;
       font-weight: 700;
     }
+
     .subject-item p {
       margin: 0;
       color: #444;
@@ -145,16 +147,13 @@
               <li><a href="#">วิสัยทัศน์ / พันธกิจ</a></li>
               <li><a href="#">โครงสร้างองค์กร</a></li>
             </ul>
-            
           </li>
-            <li>
+          <li>
             <a href="#">ระบบสำหรับนักเรียน</a>
             <ul class="dropdown">
               <li><a href="program.html" class="active">แผนความถนัด</a></li>
             </ul>
-            
           </li>
-          
           <li><a href="#">ข่าวสาร</a></li>
           <li><a href="#">ติดต่อ</a></li>
         </ul>
@@ -175,7 +174,5 @@
       <p class="copyrighttext">&copy; 2025 โรงเรียนสุวรรณคุณาธร | SNT R&D Team</p>
     </div>
   </footer>
-
-  
 </body>
 </html>
