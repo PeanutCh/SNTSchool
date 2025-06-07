@@ -182,26 +182,6 @@
     </div>
   </footer>
 
-  <script type="module">
-    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-auth.js";
-    const auth = getAuth();
-
-    const logoutBtn = document.getElementById("logout-btn");
-    const userInfo = document.getElementById("user-info");
-
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        logoutBtn.style.display = "inline-block";
-      } else {
-        logoutBtn.style.display = "none";
-        userInfo.textContent = "";
-      }
-    });
-
-    logoutBtn.addEventListener("click", async () => {
-      await signOut(auth);
-      window.location.href = "Home.html";
-    });
-  </script>
+  
 </body>
 </html>
